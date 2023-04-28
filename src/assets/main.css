@@ -1,6 +1,13 @@
+@font-face {
+  font-family: "Ubuntu";
+  font-style: normal;
+  font-display: auto;
+  src: local("Ubuntu"), url("/font/Ubuntu-Regular.woff2") format("woff2");
+}
+
 body {
   background-color: #17242c;
-  font: "Helvetica Now", sans-serif;
+  font-family: 'Ubuntu';
   font-size: 16px;
   color: #fff;
 }
