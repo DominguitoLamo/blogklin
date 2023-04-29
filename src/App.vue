@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView, useRouter } from 'vue-router'
 import { ref } from 'vue';
 import { routes } from './router/index'
 
+const router = useRouter()
 const routesRef = ref(routes.map(item => {
   return {
     ...item,
@@ -12,6 +13,7 @@ const routesRef = ref(routes.map(item => {
 
 function handlePageNav(activeIndex: number) {
   routesRef.value.forEach((item, curindex) => item.active = activeIndex === curindex)
+  router.push(routesRef.value[activeIndex].path)
 }
 
 </script>
@@ -28,8 +30,7 @@ function handlePageNav(activeIndex: number) {
       >{{ item.name }}</a>
     </nav>
   </header>
-
-  <!--<RouterView />-->
+  <RouterView />
 </template>
 
 <style scoped>
