@@ -8,6 +8,12 @@ interface Tag {
 }
 
 const blogs = blogIndex.index
+const blogPops = ref(Array(blogs.length).fill(false)) as Ref<[boolean]>
+
+const blogPopStyle = {
+  opacity: 1,
+  transform: 'none'
+}
 
 const tags: Ref<Array<Tag>> = ref([])
 const tagsActive = ref(0)
@@ -21,6 +27,11 @@ const tabs_background = [
 ]
 
 onMounted(() => {
+  initTag()
+  blogPopUp()
+})
+
+function initTag() {
   const tagSet = new Set<string>()
   blogIndex.index.forEach((item) => {
     item.tags.forEach(tag => tagSet.add(tag))
@@ -31,7 +42,15 @@ onMounted(() => {
       colorClass: tabs_background[index % tabs_background.length]
     }
   })
-})
+}
+
+function blogPopUp() {
+  blogs.forEach((item, index) => {
+    setTimeout(() => {
+      blogPops.value[index] = true
+    }, 100 * (index + 1))
+  })
+}
 
 function handleTagTopics(index: number) {
   tagsActive.value = index
@@ -60,6 +79,7 @@ function handleTagTopics(index: number) {
         v-for="(item, index) in blogs"
         :key="index"
         class="blog-box"
+        :style="blogPops[index] ? blogPopStyle : ''"
       >
         <div class="img-box">
           <img :src="item.picUrl" />
@@ -196,7 +216,9 @@ function handleTagTopics(index: number) {
     border-style: solid;
     border-color: transparent;
     border-image: initial;
-    transition: border 350ms ease 100ms, background-color 200ms ease;
+    transition: border 350ms ease 100ms, background-color 200ms ease, opacity 500ms ease, transform 500ms ease;
+    transform: translateY(50px);
+    opacity: 0;
   }
 
   .blog-box:hover {
