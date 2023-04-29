@@ -7,6 +7,8 @@ interface Tag {
   colorClass: string
 }
 
+const blogs = blogIndex.index
+
 const tags: Ref<Array<Tag>> = ref([])
 const tagsActive = ref(0)
 const tabs_background = [
@@ -53,6 +55,25 @@ function handleTagTopics(index: number) {
         >{{ item.tag }}</span>
       </div>
     </nav>
+    <div class="blog-preview">
+      <div
+        v-for="(item, index) in blogs"
+        :key="index"
+        class="blog-box"
+      >
+        <div class="img-box">
+          <img :src="item.picUrl" />
+        </div>
+        <div class="blog-title">{{ item.title }}</div>
+        <div class="tag-list">
+          <span v-for="tag in item.tags" :key="tag">#{{ tag }}</span>
+        </div>
+        <div class="date">
+          <img src="@/assets/date.svg" />
+          <span>{{ item.date }}</span>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 <style scoped>
@@ -154,5 +175,72 @@ function handleTagTopics(index: number) {
   }
   .tag-background-6.active {
     background-color: rgb(237, 206, 104);
+  }
+  .blog-preview {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .blog-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    background-color: rgb(16, 24, 29);
+    cursor: pointer;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 20px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
+    border-image: initial;
+    transition: border 350ms ease 100ms, background-color 200ms ease;
+  }
+
+  .blog-box:hover {
+    border: 2px solid rgb(51, 147, 148);
+    background-color: rgb(23, 36, 44);
+  }
+
+  .blog-box:hover > .img-box {
+    transform: scale3d(1.06181, 1.06181, 1);
+  }
+
+  .img-box {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    transition: transform 500ms ease 0s;
+    transform-origin: 50% 100%;
+  }
+
+  .img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 17px;
+    border: 2px solid rgb(51, 147, 148);
+  }
+
+  .blog-title {
+    margin-bottom: 18px;
+    font-size: 22px;
+    line-height: 26px;
+    font-weight: bold;
+    letter-spacing: -0.02em;
+  }
+
+  .tag-list {
+    display: flex;
+    gap: 8px;
+    color: rgb(92, 198, 199);
+  }
+
+  .date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 </style>
