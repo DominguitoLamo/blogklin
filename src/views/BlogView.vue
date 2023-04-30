@@ -2,13 +2,20 @@
 import blogIndex from '@/blogs/index.json'
 import { onMounted, ref, type Ref } from 'vue';
 
+const BLOGS_PER_PAGE = 9
+
 interface Tag {
   tag: string,
   colorClass: string
 }
 
-const blogs = blogIndex.index
-const blogPops = ref(Array(blogs.length).fill(false)) as Ref<[boolean]>
+const totalBlogs = blogIndex.index
+const totalPages = Math.ceil(totalBlogs.length / BLOGS_PER_PAGE)
+const curPage = ref(1)
+
+const blogs = ref(totalBlogs.slice(0, BLOGS_PER_PAGE))
+const blogPops = ref(Array(blogs.value.length).fill(false)) as Ref<[boolean]>
+const isPreviewFadeOut = ref(false)
 
 const blogPopStyle = {
   opacity: 1,
@@ -45,7 +52,7 @@ function initTag() {
 }
 
 function blogPopUp() {
-  blogs.forEach((item, index) => {
+  blogs.value.forEach((item, index) => {
     setTimeout(() => {
       blogPops.value[index] = true
     }, 100 * (index + 1))
@@ -54,6 +61,30 @@ function blogPopUp() {
 
 function handleTagTopics(index: number) {
   tagsActive.value = index
+}
+
+function changePage(index: number) {
+  isPreviewFadeOut.value = true
+  setTimeout(() => {
+    // reset
+    isPreviewFadeOut.value = false
+    blogPops.value.forEach(item => item = false)
+    blogs.value = totalBlogs.slice((index - 1) * BLOGS_PER_PAGE, (index - 1) * BLOGS_PER_PAGE + 9)
+    curPage.value = index
+
+    setTimeout(() => {
+      blogPopUp()
+    }, 0)
+  }, 500)
+
+}
+
+function increasePageIndex() {
+  changePage(curPage.value + 1)
+}
+
+function decreasePageIndex() {
+  changePage(curPage.value - 1)
 }
 
 </script>
@@ -74,7 +105,7 @@ function handleTagTopics(index: number) {
         >{{ item.tag }}</span>
       </div>
     </nav>
-    <div class="blog-preview">
+    <div class="blog-preview" :class="{'fade-out': isPreviewFadeOut}">
       <div
         v-for="(item, index) in blogs"
         :key="index"
@@ -93,6 +124,23 @@ function handleTagTopics(index: number) {
           <span>{{ item.date }}</span>
         </div>
       </div>
+    </div>
+    <div class="pages">
+        <span @click="decreasePageIndex" v-if="curPage !== 1" class="arrow">
+          <img src="@/assets/left_arrow.svg"/>
+        </span>
+        <div class="page-nums">
+          <span
+            :class="{'page-active': curPage === item}"
+            v-for="item in totalPages"
+            :key="item"
+            @click="changePage(item)"
+            >{{ item }}
+          </span>
+        </div>
+        <span @click="increasePageIndex" v-if="curPage !== totalPages" class="arrow">
+          <img src="@/assets/right_arrow.svg"/>
+        </span>
     </div>
   </main>
 </template>
@@ -200,6 +248,13 @@ function handleTagTopics(index: number) {
     display: grid;
     gap: 32px;
     grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 60px;
+    transition: opacity 500ms ease;
+    opacity: 1;
+  }
+
+  .blog-preview.fade-out {
+    opacity: 0;
   }
 
   .blog-box {
@@ -264,5 +319,42 @@ function handleTagTopics(index: number) {
     display: flex;
     align-items: center;
     gap: 6px;
+  }
+
+  .pages {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .pages .arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 14px;
+    height: 14px;
+    padding: 8px;
+    border-radius: 50%;
+    background-color: rgb(115, 206, 207);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .page-nums {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .page-nums span {
+    font-size: 18px;
+    color: rgb(100, 116, 139);
+    cursor: pointer;
+  }
+
+  .page-nums span.page-active {
+    color: #fff;
+    font-weight: 500;
   }
 </style>
