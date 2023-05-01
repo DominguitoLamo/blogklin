@@ -1,12 +1,25 @@
 <script setup lang="ts">
 import { RouterView, useRouter } from 'vue-router'
 import { ref } from 'vue';
-import { routes } from './router/index'
 import { getLocationHashName } from '@/utils'
 
 const router = useRouter()
+const appRoutes = [
+{
+    path: '/',
+    name: 'Blog',
+  },
+  {
+    path: '/tool',
+    name: 'Tool',
+  },
+  {
+    path: '/about',
+    name: 'About',
+  }
+]
 
-const routesRef = ref(routes.map(item => {
+const routesRef = ref(appRoutes.map(item => {
   return {
     ...item,
     active: item.name.toLowerCase() === getLocationHashName()

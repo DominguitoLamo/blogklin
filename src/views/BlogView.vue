@@ -2,6 +2,7 @@
 import blogIndex from '@/blogs/index.json'
 import { onMounted, ref, type Ref } from 'vue'
 import { debounce } from '@/utils'
+import router from '@/router'
 
 const BLOGS_PER_PAGE = 9
 
@@ -114,6 +115,15 @@ function searchByTag(text: string) {
   searchBlog()
 }
 
+function gotoBlogContent(title: string) {
+  router.push({
+    name: 'BlogContent',
+    query: {
+      title
+    }
+  })
+}
+
 const searchBlogDebounced = debounce(searchBlog, 500)
 </script>
 <template>
@@ -139,6 +149,7 @@ const searchBlogDebounced = debounce(searchBlog, 500)
         :key="index"
         class="blog-box"
         :style="blogPops[index] ? blogPopStyle : ''"
+        @click="gotoBlogContent(item.title)"
       >
         <div class="img-box">
           <img :src="item.picUrl" />
