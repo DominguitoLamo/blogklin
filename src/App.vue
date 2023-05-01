@@ -2,14 +2,25 @@
 import { RouterView, useRouter } from 'vue-router'
 import { ref } from 'vue';
 import { routes } from './router/index'
+import { getLocationHashName } from '@/utils'
 
 const router = useRouter()
+
 const routesRef = ref(routes.map(item => {
   return {
     ...item,
-    active: item.name === 'Blog'
+    active: item.name.toLowerCase() === getLocationHashName()
   }
 }))
+const routerShow = ref(true)
+
+router.beforeEach((to, from, next) => {
+  routerShow.value = false
+  setTimeout(() => {
+    routerShow.value = true
+    next()
+  }, 300)
+})
 
 function handlePageNav(activeIndex: number) {
   routesRef.value.forEach((item, curindex) => item.active = activeIndex === curindex)
@@ -32,7 +43,7 @@ function handlePageNav(activeIndex: number) {
   </header>
   <RouterView />
   <footer>
-    <span>Made with 🤍 by Chon Lam</span>
+    <span class="footer-text">Made with 🤍 by Chon Lam</span>
   </footer>
 </template>
 
@@ -77,5 +88,11 @@ function handlePageNav(activeIndex: number) {
     padding-bottom: 20px;
     font-size: 14px;
     user-select: none;
+  }
+
+  .footer-text {
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: normal;
   }
 </style>

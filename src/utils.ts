@@ -9,3 +9,8 @@ export function debounce(func: Function, wait: number) {
     timeout = setTimeout(later, wait);
   };
 }
+
+export function getLocationHashName() {
+  const hash = window.location.hash
+  return hash.substring(2)
+}
