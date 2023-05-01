@@ -6,10 +6,11 @@ const route = useRoute()
 const blogInfo = blogIndex.index.find((item => {
   return item.title === route.query.title
 }))
-console.log(blogInfo)
 </script>
 <template>
   <div>
     blogContent
+    <MDRender title="Hello" />
+    <Hello />
   </div>
 </template>
