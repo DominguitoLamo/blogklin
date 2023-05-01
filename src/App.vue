@@ -31,6 +31,9 @@ function handlePageNav(activeIndex: number) {
     </nav>
   </header>
   <RouterView />
+  <footer>
+    <span>Made with 🤍 by Chon Lam</span>
+  </footer>
 </template>
 
 <style scoped>
@@ -65,5 +68,14 @@ function handlePageNav(activeIndex: number) {
 
   .active-page {
     color: rgb(51, 147, 148);
+  }
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-bottom: 20px;
+    font-size: 14px;
+    user-select: none;
   }
 </style>
