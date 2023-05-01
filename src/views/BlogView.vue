@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import blogIndex from '@/blogs/index.json'
-import { onMounted, ref, type Ref } from 'vue';
+import { onMounted, ref, type Ref } from 'vue'
+import { debounce } from '@/utils'
 
 const BLOGS_PER_PAGE = 9
 
@@ -33,6 +34,8 @@ const tabs_background = [
   'tag-background-6'
 ]
 
+const searchText = ref('')
+
 onMounted(() => {
   initTag()
   blogPopUp()
@@ -59,8 +62,9 @@ function blogPopUp() {
   })
 }
 
-function handleTagTopics(index: number) {
+function handleTagTopics(index: number, text: string) {
   tagsActive.value = index
+  searchByTag(text)
 }
 
 function changePage(index: number) {
@@ -87,11 +91,35 @@ function decreasePageIndex() {
   changePage(curPage.value - 1)
 }
 
+function searchBlog() {
+  const keyWord = searchText.value
+  if (!keyWord) {
+    blogs.value = totalBlogs.slice(0, BLOGS_PER_PAGE)
+    return
+  }
+
+  const blogFound = totalBlogs.filter((item) => {
+    if (item.title.includes(keyWord) || item.tags.some(item => item.includes(keyWord))) {
+      return true
+    } else {
+      return false
+    }
+  })
+
+  blogs.value = blogFound
+}
+
+function searchByTag(text: string) {
+  searchText.value = text === 'All' ? '' : text
+  searchBlog()
+}
+
+const searchBlogDebounced = debounce(searchBlog, 500)
 </script>
 <template>
   <main>
     <div class="search">
-      <input class="search-input" type="text" placeholder="Search">
+      <input @input="searchBlogDebounced" v-model="searchText" class="search-input" type="text" placeholder="Search">
     </div>
     <nav class="topics">
       <div class="title">Topics</div>
@@ -101,7 +129,7 @@ function decreasePageIndex() {
           class="tags-item"
           v-for="(item, index) in tags"
           :key="item.tag"
-          @click="handleTagTopics(index)"
+          @click="handleTagTopics(index, item.tag)"
         >{{ item.tag }}</span>
       </div>
     </nav>
@@ -125,7 +153,7 @@ function decreasePageIndex() {
         </div>
       </div>
     </div>
-    <div class="pages">
+    <div v-show="searchText === ''" class="pages">
         <span @click="decreasePageIndex" v-if="curPage !== 1" class="arrow">
           <img src="@/assets/left_arrow.svg"/>
         </span>
