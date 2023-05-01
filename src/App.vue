@@ -41,7 +41,11 @@ function handlePageNav(activeIndex: number) {
       >{{ item.name }}</a>
     </nav>
   </header>
-  <RouterView />
+  <router-view v-slot="{ Component }">
+    <transition name="fade">
+      <component :is="Component" />
+    </transition>
+  </router-view>
   <footer>
     <span class="footer-text">Made with 🤍 by Chon Lam</span>
   </footer>
@@ -94,5 +98,16 @@ function handlePageNav(activeIndex: number) {
     font-size: 14px;
     font-weight: normal;
     letter-spacing: normal;
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 500ms ease, transform 500ms ease;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+    transform: translateY(-50px);
   }
 </style>
