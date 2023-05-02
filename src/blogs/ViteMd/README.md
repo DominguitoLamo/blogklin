@@ -96,7 +96,7 @@ That means you can:
 
 1. **Import Markdown** as Vue components
 
-   ```html
+   ```vue
    <template>
      <HelloWorld />
    </template>
