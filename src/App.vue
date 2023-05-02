@@ -69,7 +69,7 @@ function handlePageNav(activeIndex: number) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px;
+    padding: 30px 40px;
   }
 
   span {
@@ -102,6 +102,7 @@ function handlePageNav(activeIndex: number) {
     display: flex;
     align-items: center;
     justify-content: end;
+    padding: 0 10px;
     padding-bottom: 20px;
     font-size: 14px;
     user-select: none;
