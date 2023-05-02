@@ -8,7 +8,6 @@ const blogInfo = blogIndex.index.find((item => {
 }))
 </script>
 <template>
-  <main>
     <header>
       <div class="blog-info">
         <div class="left">
@@ -31,7 +30,9 @@ const blogInfo = blogIndex.index.find((item => {
       <path d="M0 0H1440V69C1440 69 1243.16 111.882 720 69C232 29 0 69 0 69V0Z" fill="#10181D">
       </path>
     </svg>
-  </main>
+    <main>
+      <MDRender :title="blogInfo!.title"/>
+    </main>
 </template>
 <style scoped>
   header {
@@ -74,7 +75,7 @@ const blogInfo = blogIndex.index.find((item => {
   }
 
   .left .title {
-    max-width: 384px;
+    width: 384px;
     font-size: 40px;
     line-height: 48px;
     margin-bottom: 32px;
@@ -111,5 +112,11 @@ const blogInfo = blogIndex.index.find((item => {
 
   .round-decor {
     margin-bottom: 30px;
+  }
+
+  main {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px;
   }
 </style>

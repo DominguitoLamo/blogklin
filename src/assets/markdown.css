@@ -1,0 +1,11 @@
+.markdown-body {
+  max-width: 1000px;
+}
+
+.markdown-body a {
+  color: rgb(92, 198, 199);
+}
+
+.markdown-body .code-wrapper {
+  background-color: #000;
+}

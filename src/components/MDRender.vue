@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import Hello from '@/blogs/hello.md'
-import Another from '@/blogs/another.md'
 import { reactive, defineProps } from 'vue'
+import ViteMd from '@/blogs/ViteMd/README.md'
 
 const blogs: Record<string, any> = reactive({
-  Hello,
-  Another
+  ViteMd
 })
 
 const props = defineProps({

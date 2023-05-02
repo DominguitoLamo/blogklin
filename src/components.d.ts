@@ -16,8 +16,10 @@ declare module '@vue/runtime-core' {
     IconSupport: typeof import('./components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./components/icons/IconTooling.vue')['default']
     MDRender: typeof import('./components/MDRender.vue')['default']
+    README: typeof import('./blogs/ViteMd/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ViteMd: typeof import('./blogs/ViteMd/ViteMd.md')['default']
     WelcomeItem: typeof import('./components/WelcomeItem.vue')['default']
   }
 }
