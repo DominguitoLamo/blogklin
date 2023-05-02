@@ -1,17 +1,24 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import blogIndex from '@/blogs/index.json'
 
+const router = useRouter()
 const route = useRoute()
 const blogInfo = blogIndex.index.find((item => {
   return item.title === route.query.title
 }))
+
+function backToBlogList() {
+  router.push({
+    name: 'Blog'
+  })
+}
 </script>
 <template>
     <header>
       <div class="blog-info">
         <div class="left">
-          <button class="back"><img src="@/assets/back_arrow.svg" />Back</button>
+          <button @click="backToBlogList" class="back"><img src="@/assets/back_arrow.svg" />Back</button>
           <div class="title">{{ blogInfo?.title }}</div>
           <div class="tags">
             <span class="tag" v-for="item in blogInfo?.tags" :key="item">#{{ item }}</span>
