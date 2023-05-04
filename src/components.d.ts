@@ -19,7 +19,6 @@ declare module '@vue/runtime-core' {
     README: typeof import('./blogs/ViteMd/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    ViteMd: typeof import('./blogs/ViteMd/ViteMd.md')['default']
     WelcomeItem: typeof import('./components/WelcomeItem.vue')['default']
   }
 }

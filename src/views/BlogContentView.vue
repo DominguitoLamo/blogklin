@@ -1,45 +1,54 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 import blogIndex from '@/blogs/index.json'
+import { ref } from 'vue'
 
 const router = useRouter()
 const route = useRoute()
 const blogInfo = blogIndex.index.find((item => {
   return item.title === route.query.title
 }))
+const loading = ref(false)
+
 
 function backToBlogList() {
   router.push({
     name: 'Blog'
   })
 }
+
+setTimeout(() => {
+  loading.value = true
+}, 500)
 </script>
 <template>
-    <header>
-      <div class="blog-info">
-        <div class="left">
-          <button @click="backToBlogList" class="back"><img src="@/assets/back_arrow.svg" />Back</button>
-          <div class="title">{{ blogInfo?.title }}</div>
-          <div class="tags">
-            <span class="tag" v-for="item in blogInfo?.tags" :key="item">#{{ item }}</span>
+    <div v-show="loading" class="loading">
+      <header>
+        <div class="blog-info">
+          <div class="left">
+            <button @click="backToBlogList" class="back"><img src="@/assets/back_arrow.svg" />Back</button>
+            <div class="title">{{ blogInfo?.title }}</div>
+            <div class="tags">
+              <span class="tag" v-for="item in blogInfo?.tags" :key="item">#{{ item }}</span>
+            </div>
+            <div class="date">
+              <img src="@/assets/date.svg" />
+              <span>{{ blogInfo?.date }}</span>
+            </div>
           </div>
-          <div class="date">
-            <img src="@/assets/date.svg" />
-            <span>{{ blogInfo?.date }}</span>
+          <div class="right">
+            <img :src="blogInfo?.picUrl" />
           </div>
         </div>
-        <div class="right">
-          <img :src="blogInfo?.picUrl" />
-        </div>
-      </div>
-    </header>
-    <svg viewBox="0 0 1440 89" class="round-decor">
-      <path d="M0 0H1440V69C1440 69 1243.16 111.882 720 69C232 29 0 69 0 69V0Z" fill="#10181D">
-      </path>
-    </svg>
-    <main>
-      <MDRender :title="blogInfo!.title"/>
-    </main>
+      </header>
+      <svg viewBox="0 0 1440 89" class="round-decor">
+        <path d="M0 0H1440V69C1440 69 1243.16 111.882 720 69C232 29 0 69 0 69V0Z" fill="#10181D">
+        </path>
+      </svg>
+      <main>
+        <MDRender :title="blogInfo!.title"/>
+      </main>
+    </div>
 </template>
 <style scoped>
   header {
@@ -125,5 +134,15 @@ function backToBlogList() {
     display: flex;
     justify-content: center;
     padding-bottom: 50px;
+  }
+
+  .loading {
+    animation-name: loading;
+    animation-duration: 1s;
+  }
+
+  @keyframes loading {
+    from {opacity: 0;}
+    to {opacity: 1;}
   }
 </style>
