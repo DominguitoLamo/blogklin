@@ -185,6 +185,9 @@ const searchBlogDebounced = debounce(searchBlog, 500)
 </template>
 <style scoped>
   main {
+    display: flex;
+    flex-direction: column;
+    min-height: 79vh;;
     padding: 10px 190px;
     padding-bottom: 60px;
   }
@@ -364,6 +367,7 @@ const searchBlogDebounced = debounce(searchBlog, 500)
     display: flex;
     justify-content: center;
     gap: 20px;
+    margin-top: auto;
   }
 
   .pages .arrow {
