@@ -1,1 +1,0 @@
-import{_ as t,o as s,c as e,a as o}from"./index-08d92113.js";const n={},c={class:"oution"},a=o("main",null,[o("nav",{class:"tools"}),o("iframe",{src:"https://www.notion.so/",title:"notion"})],-1),_=o("footer",null,null,-1),i=[a,_];function r(l,d){return s(),e("div",c,i)}const u=t(n,[["render",r]]);export{u as default};

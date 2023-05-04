@@ -46,7 +46,7 @@ setTimeout(() => {
         </path>
       </svg>
       <main>
-        <MDRender :title="blogInfo!.title"/>
+        <!-- <MDRender :title="blogInfo!.title"/> -->
       </main>
     </div>
 </template>
