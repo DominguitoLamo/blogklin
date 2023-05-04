@@ -4,7 +4,7 @@
 <template>
   <div class="about">
     <div class="introduction">
-      <span id="introd" tg-name="fade" class="title">{{ introduction }}</span>
+      <span class="title">{{ introduction }}</span>
       <span class="logo">B</span>
     </div>
   </div>
@@ -13,7 +13,7 @@
 <style scoped>
 
 .about {
-  height: 200vh;
+  min-height: 87vh;
 }
 
 .introduction {
@@ -30,6 +30,11 @@
   line-height: 48px;
   font-weight: bold;
   color: rgb(92, 198, 199);
+  opacity: 0;
+  animation-name: fade;
+  animation-duration: 1s;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
 }
 
 .introduction .logo {
@@ -93,8 +98,8 @@
   }
 }
 
-#introd {
-  opacity: calc(var(--fade) * 1);
+@keyframes fade {
+  from {opacity: 0; transform: translateX(-50px);}
+  to {opacity: 1;transform: none;}
 }
-
 </style>
