@@ -1,15 +1,24 @@
 <script setup lang="ts">
-  const tools = [
-    {
-      name: 'Oution',
-      icon: 'oution_icon.svg',
-      introd: `Add the functions to empower Notion's AI`
-    }
-  ]
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const tools = [
+  {
+    name: 'Oution',
+    icon: 'oution_icon.svg',
+    introd: `Add the functions to empower Notion's AI`,
+  }
+]
+
+function gotoTool(name: string) {
+  router.push({
+    name
+  })
+}
 </script>
 <template>
   <div class="tool">
-    <div class="tool-item" v-for="item in tools" :key="item.name">
+    <div @click="gotoTool(item.name)" class="tool-item" v-for="item in tools" :key="item.name">
       <span class="animation"></span>
       <span class="animation"></span>
       <span class="animation"></span>
@@ -26,7 +35,7 @@
   .tool {
     display: flex;
     gap: 13px;
-    min-height: 86vh;
+    min-height: 83vh;
     padding: 20px
   }
 

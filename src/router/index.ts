@@ -25,6 +25,11 @@ export const routes: RouteRecordRaw[] = [
     name: 'BlogContent',
     component: () => import('../views/BlogContentView.vue'),
     props: route => ({ title: route.query.title })
+  },
+  {
+    path: '/oution',
+    name: 'Oution',
+    component: () => import('../views/OutionView.vue')
   }
 ]
 
