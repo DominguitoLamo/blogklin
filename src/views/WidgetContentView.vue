@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 import ExcelConverter from '@/components/ExcelConverter.vue'
+import { useFadeStore } from '@/state/topFade'
 
 const components: Record<string, any> = {
   ExcelConverter
 }
 const route = useRoute()
 const router = useRouter()
+const fadeState = useFadeStore()
 const componentName = route.query.name as string
 
+fadeState.setShowTop(false)
+
 function backToWidget() {
+  setTimeout(() => {
+    fadeState.setShowTop(true)
+  })
   router.push({
     name: 'Widget'
   })

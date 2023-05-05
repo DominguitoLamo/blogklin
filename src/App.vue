@@ -2,6 +2,7 @@
 import { RouterView, useRouter } from 'vue-router'
 import { ref } from 'vue';
 import { getLocationHashName } from '@/utils'
+import { useFadeStore } from './state/topFade'
 
 const router = useRouter()
 const appRoutes = [
@@ -18,6 +19,7 @@ const appRoutes = [
     name: 'About',
   }
 ]
+const fadeState = useFadeStore()
 
 const routesRef = ref(appRoutes.map(item => {
   return {
@@ -43,7 +45,7 @@ function handlePageNav(activeIndex: number) {
 </script>
 
 <template>
-  <header>
+  <header v-show="fadeState.showTop">
     <span>BLOGKLIN</span>
     <nav v-if="routesRef.length > 0">
       <a
@@ -70,6 +72,10 @@ function handlePageNav(activeIndex: number) {
     justify-content: space-between;
     align-items: center;
     padding: 30px 40px;
+  }
+
+  header.top-faded {
+    display: none;
   }
 
   span {

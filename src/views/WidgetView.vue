@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { useFadeStore } from '@/state/topFade'
 
+const fadeState = useFadeStore()
 const router = useRouter()
 const tools = [
   {
