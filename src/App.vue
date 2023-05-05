@@ -3,6 +3,7 @@ import { RouterView, useRouter } from 'vue-router'
 import { ref } from 'vue';
 import { getLocationHashName } from '@/utils'
 import { useFadeStore } from './state/topFade'
+import ToastMsg from './components/ToastMsg.vue'
 
 const router = useRouter()
 const appRoutes = [
@@ -64,6 +65,9 @@ function handlePageNav(activeIndex: number) {
   <footer>
     <span class="footer-text">Made with 🤍 by Chon Lam</span>
   </footer>
+
+  <!--Toast-->
+  <ToastMsg ></ToastMsg>
 </template>
 
 <style scoped>

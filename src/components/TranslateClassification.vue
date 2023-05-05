@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { text2clip } from '@/utils'
+import { text2clip, showToast } from '@/utils'
 
 const src = ref(``)
 const result = reactive({
@@ -21,8 +21,6 @@ function classification() {
 
     // chinese case
     const mid = Math.round(item.length / 2) - 1
-    console.log(item[mid])
-    console.log('chinese pattern:', chinesePattern.test(item[mid]))
     if (chinesePattern.test(item[mid]) ||
       chinesePattern.test(item[0]) ||
       chinesePattern.test(item[item.length - 1])
@@ -58,6 +56,7 @@ function classification() {
 
 function copy2Clipboard(text: string) {
   text2clip(text)
+  showToast('Success to copy to the clipboard')
 }
 </script>
 <template>

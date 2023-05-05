@@ -1,3 +1,5 @@
+import { useToastStore } from "./state/toastState"
+
 export function debounce(func: Function, wait: number) {
   let timeout: ReturnType<typeof setTimeout>;
   return function executedFunction(...args: any[]) {
@@ -17,4 +19,9 @@ export function getLocationHashName() {
 
 export function text2clip(text: string) {
   return navigator.clipboard.writeText(text)
+}
+
+export function showToast(inputMsg: string, durationTime: number = 1500) {
+  const toast = useToastStore()
+  toast.showToast(inputMsg, durationTime)
 }
