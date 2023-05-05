@@ -14,3 +14,20 @@ body {
   color: #fff;
   margin: 0;
 }
+
+.normal-button {
+  border: none;
+  background-color: rgb(92, 198, 199);
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color .2s ease-in-out;
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+  7px 7px 20px 0px rgba(0,0,0,.1),
+  4px 4px 5px 0px rgba(0,0,0,.1);
+}
+
+.normal-button:hover {
+  background-color: rgb(51, 147, 148);
+}
