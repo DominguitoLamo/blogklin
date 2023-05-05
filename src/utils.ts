@@ -14,3 +14,7 @@ export function getLocationHashName() {
   const hash = window.location.hash
   return hash.substring(2)
 }
+
+export function text2clip(text: string) {
+  return navigator.clipboard.writeText(text)
+}

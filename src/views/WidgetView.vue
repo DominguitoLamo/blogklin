@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { useFadeStore } from '@/state/topFade'
 
-const fadeState = useFadeStore()
 const router = useRouter()
 const tools = [
   {
     name: 'ExcelConverter',
     icon: 'table.svg',
     introd: `Convert excel to json or markdown`,
+  },
+  {
+    name: 'TranslateClassification',
+    icon: 'text.svg',
+    introd: `Seperate Chinese and English text`
   }
 ]
 
@@ -39,7 +42,7 @@ function gotoTool(name: string) {
 <style scoped>
   .tool {
     display: flex;
-    gap: 13px;
+    gap: 50px;
     min-height: 83vh;
     padding: 20px
   }

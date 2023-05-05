@@ -19,6 +19,7 @@ declare module '@vue/runtime-core' {
     MDRender: typeof import('./components/MDRender.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TranslateClassification: typeof import('./components/TranslateClassification.vue')['default']
     Upload: typeof import('./components/Upload.vue')['default']
     UploadFile: typeof import('./components/UploadFile.vue')['default']
     WelcomeItem: typeof import('./components/WelcomeItem.vue')['default']

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 import ExcelConverter from '@/components/ExcelConverter.vue'
+import TranslateClassification from '@/components/TranslateClassification.vue'
 import { useFadeStore } from '@/state/topFade'
 
 const components: Record<string, any> = {
-  ExcelConverter
+  ExcelConverter,
+  TranslateClassification
 }
 const route = useRoute()
 const router = useRouter()
