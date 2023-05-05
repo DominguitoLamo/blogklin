@@ -8,9 +8,9 @@ export const routes: RouteRecordRaw[] = [
     component: BlogView
   },
   {
-    path: '/tool',
-    name: 'Tool',
-    component: () => import('../views/ToolView.vue')
+    path: '/widget',
+    name: 'Widget',
+    component: () => import('../views/WidgetView.vue')
   },
   {
     path: '/about',
@@ -27,9 +27,10 @@ export const routes: RouteRecordRaw[] = [
     props: route => ({ title: route.query.title })
   },
   {
-    path: '/oution',
-    name: 'Oution',
-    component: () => import('../views/OutionView.vue')
+    path: '/widgetContentView',
+    name: 'WidgetContentView',
+    component: () => import('../views/WidgetContentView.vue'),
+    props: route => ({ name: route.query.name })
   }
 ]
 

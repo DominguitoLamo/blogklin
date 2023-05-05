@@ -10,8 +10,8 @@ const appRoutes = [
     name: 'Blog',
   },
   {
-    path: '/tool',
-    name: 'Tool',
+    path: '/widget',
+    name: 'Widget',
   },
   {
     path: '/about',

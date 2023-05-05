@@ -4,15 +4,18 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const tools = [
   {
-    name: 'Oution',
-    icon: 'oution_icon.svg',
-    introd: `Add the functions to empower Notion's AI`,
+    name: 'ExcelConverter',
+    icon: 'table.svg',
+    introd: `Convert excel to json or markdown`,
   }
 ]
 
 function gotoTool(name: string) {
   router.push({
-    name
+    name: 'WidgetContentView',
+    query: {
+      name
+    }
   })
 }
 </script>

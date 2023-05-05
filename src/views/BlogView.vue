@@ -205,7 +205,7 @@ const searchBlogDebounced = debounce(searchBlog, 500)
     border-radius: 16px;
     font-size: 16px;
     background-color: rgb(40, 60, 73);
-    color: rgb(207, 213, 221)
+    color: rgb(207, 213, 221);
   }
 
   .search-input:focus {
