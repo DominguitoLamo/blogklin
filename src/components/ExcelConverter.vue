@@ -1,12 +1,85 @@
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
+import { ref } from 'vue'
 import UploadFile from './UploadFile.vue'
+import { read as xlsxRead, utils as xlsxUtils } from 'xlsx'
+// @ts-ignore
+import json2md from 'json2md'
+
+interface ExcelData {
+  name: string,
+  data: Array<unknown>
+}
 
 const uploadedFile = ref()
+const resultText = ref('')
 
 function handleUploadChange(file: File) {
-  console.log(file)
   uploadedFile.value = file
+}
+
+function gen2Json() {
+  if (!uploadedFile.value) {
+    alert('No file uploaded')
+  }
+
+  getExcelData((excel) => {
+      // convert to string
+      const strResult = excel.reduce((result, item) => {
+        const jsonStr = item.data.reduce((subResult, subItem) => {
+          return subResult + `${JSON.stringify(subItem)}\n`
+        }, "")
+        return result +  `${item.name}\n${jsonStr}\n`
+      }, "")
+      resultText.value = strResult
+  })
+}
+
+function gen2Md() {
+  if (!uploadedFile.value) {
+    alert('No file uploaded')
+  }
+
+  getExcelData(excelData => {
+    const mdArr: Array<any> = []
+    excelData.forEach((item) => {
+      mdArr.push(
+        {
+        h2: item.name ?? "null"
+      })
+      if (item.data && item.data.length > 0) {
+        mdArr.push({
+          table: {
+            headers: [...Object.keys(item.data[0] as any)],
+            // @ts-ignore
+            rows: [...item.data.map(subItem => Object.values(subItem))]
+          }
+        })
+      }
+    })
+
+    resultText.value = json2md(mdArr)
+  })
+}
+
+function getExcelData(callback: (data: Array<ExcelData>) => void) {
+  // load data
+  const fileLoaded = uploadedFile.value
+  const reader = new FileReader()
+  reader.readAsBinaryString(fileLoaded)
+  reader.onload = (e: any) => {
+    const loaded = e.target.result
+    const excelData = xlsxRead(loaded, {
+      type: 'binary'
+    })
+
+    const result = excelData.SheetNames.map(sheetName => {
+      return {
+        name: sheetName,
+        data: xlsxUtils.sheet_to_json(excelData.Sheets[sheetName])
+      }
+    }) as Array<ExcelData>
+    callback(result)
+  }
 }
 
 </script>
@@ -17,11 +90,11 @@ function handleUploadChange(file: File) {
         <UploadFile @change="handleUploadChange" file-type="xlsx" />
       </div>
       <div class="buttons">
-        <button class="normal-button json-btn">To Json</button>
-        <button class="normal-button md-btn">To Md</button>
+        <button @click="gen2Json" class="normal-button json-btn">To Json</button>
+        <button @click="gen2Md" class="normal-button md-btn">To Md</button>
       </div>
       <div class="preview">
-
+        <textarea v-model="resultText"></textarea>
       </div>
     </div>
   </div>
@@ -38,6 +111,7 @@ function handleUploadChange(file: File) {
 .buttons {
   display: flex;
   gap: 12px;
+  margin-bottom: 14px;
   padding-left: 10px;
 }
 
@@ -62,6 +136,11 @@ function handleUploadChange(file: File) {
   background: rgb(238, 94, 149);
   background: linear-gradient(0deg, rgb(238, 94, 149) 0%, rgba(234,76,137,1) 100%);
   border: none;
+}
+
+textarea {
+  width: 970px;
+  height: 300px;
 }
 </style>
 
