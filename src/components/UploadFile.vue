@@ -1,11 +1,12 @@
 <script setup lang="ts">
 const props = defineProps({
+  multiple: {type: Boolean},
   fileType: {type: String, required: true}
 })
 
 // type-based (TS)
 const emit = defineEmits<{
-  (e: 'change', file: File): void
+  (e: 'change', file: Array<File>): void
 }>()
 
 /**
@@ -13,14 +14,15 @@ const emit = defineEmits<{
  * @param e uploadEvent
  */
 function handleFile(e: any) {
-  const file = e.target.files[0] as File
-  emit('change', file)
+    const files = [...e.target.files] as Array<File>
+    emit('change', files)
 }
 </script>
 <template>
   <div class="upload">
-    <div class="title" for="avatar">Choose a {{ props.fileType }} file:</div>
+    <div class="title" for="avatar">{{ props.multiple ? `Choose ${props.fileType} files:` : `Choose a ${props.fileType} file:` }}</div>
     <input type="file"
+          :multiple="props.multiple"
           @change="handleFile"
           id="file" name="file"
           :accept="props.fileType">

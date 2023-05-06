@@ -13,8 +13,8 @@ interface ExcelData {
 const uploadedFile = ref()
 const resultText = ref('')
 
-function handleUploadChange(file: File) {
-  uploadedFile.value = file
+function handleUploadChange(file: Array<File>) {
+  uploadedFile.value = file[0]
 }
 
 function gen2Json() {

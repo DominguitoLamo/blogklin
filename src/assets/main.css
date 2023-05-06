@@ -1,5 +1,9 @@
 @import 'markdown.css';
 
+:root {
+  --theme-color: #17242c;
+}
+
 @font-face {
   font-family: "Ubuntu";
   font-style: normal;
@@ -8,7 +12,7 @@
 }
 
 body {
-  background-color: #17242c;
+  background-color: var(--theme-color);
   font-family: 'Ubuntu';
   font-size: 16px;
   color: #fff;
