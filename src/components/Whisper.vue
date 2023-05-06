@@ -1,9 +1,11 @@
 // eslint-disable-next-line vue/multi-word-component-names
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 import UploadFile from './UploadFile.vue'
 import OptionsList from './OptionsList.vue'
-import type { Option } from '@/interface';
+import type { Option } from '@/interface'
+
+const worker = new Worker(new URL('../worker/whisper.js', import.meta.url))
 
 const models: Array<Option> = [
   {
@@ -26,6 +28,7 @@ function handleFileChange(file: Array<File>) {
 
 async function generateText() {
   const audio = await generateAudioContext()
+  worker.postMessage(audio)
 }
 
 async function generateAudioContext() {
