@@ -25,5 +25,6 @@ declare module '@vue/runtime-core' {
     TranslateClassification: typeof import('./components/TranslateClassification.vue')['default']
     UploadFile: typeof import('./components/UploadFile.vue')['default']
     WelcomeItem: typeof import('./components/WelcomeItem.vue')['default']
+    Whisper: typeof import('./components/Whisper.vue')['default']
   }
 }

@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router'
 import tablePic from '@/assets/table.svg'
 import textPic from '@/assets/text.svg'
 import searchPic from '@/assets/search.svg'
+import audioPic from '@/assets/audio.svg'
 
 const router = useRouter()
 const tools = [
@@ -20,6 +21,11 @@ const tools = [
     name: 'ImageOCR',
     icon: searchPic,
     introd: 'Convert image to text'
+  },
+  {
+    name: 'Whisper',
+    icon: audioPic,
+    introd: 'Convert audio into text'
   }
 ]
 

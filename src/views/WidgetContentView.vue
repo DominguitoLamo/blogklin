@@ -3,12 +3,14 @@ import { useRoute, useRouter } from 'vue-router'
 import ExcelConverter from '@/components/ExcelConverter.vue'
 import TranslateClassification from '@/components/TranslateClassification.vue'
 import ImageOCR from '@/components/ImageOCR.vue'
+import Whisper from '@/components/Whisper.vue'
 import { useFadeStore } from '@/state/topFade'
 
 const components: Record<string, any> = {
   ExcelConverter,
   TranslateClassification,
-  ImageOCR
+  ImageOCR,
+  Whisper
 }
 const route = useRoute()
 const router = useRouter()

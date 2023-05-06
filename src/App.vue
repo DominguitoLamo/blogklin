@@ -124,11 +124,11 @@ function handlePageNav(activeIndex: number) {
 
   .slide-left-enter-from {
     opacity: 0;
-    -webkit-transform: translate(30px, 0);
-    transform: translate(30px, 0);
+    -webkit-transform: translate(60px, 0);
+    transform: translate(60px, 0);
   }
   .slide-left-enter-active{
-    transition: all .5s ease;
+    transition: all .75s ease;
   }
   .slide-left-leave-to{
     opacity: 0;
