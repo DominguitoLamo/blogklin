@@ -12,6 +12,11 @@ const tools = [
     name: 'TranslateClassification',
     icon: 'text.svg',
     introd: `Seperate Chinese and English text`
+  },
+  {
+    name: 'ImageOCR',
+    icon: 'search.svg',
+    introd: 'Convert image to text'
   }
 ]
 
@@ -51,6 +56,7 @@ function gotoTool(name: string) {
     position: relative;
     display: flex;
     flex-direction: column;
+    min-width: 300px;
     max-height: 150px;
     padding: 10px 20px;
     transition: box-shadow .75s ease;
