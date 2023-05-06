@@ -17,11 +17,28 @@ const models: Array<Option> = [
 ]
 
 const modelValue = ref('whisper-tiny.en')
-
 const uploadedFile = ref()
+const resultText = ref('')
 
 function handleFileChange(file: Array<File>) {
   uploadedFile.value = file[0]
+}
+
+async function generateText() {
+  const audio = await generateAudioContext()
+}
+
+async function generateAudioContext() {
+  const samplingRate = 16000
+  const audioCtx = new AudioContext({
+    sampleRate: samplingRate
+  })
+  const file = uploadedFile.value as File
+  const buffer = await file.arrayBuffer()
+  const decoded = await audioCtx.decodeAudioData(buffer)
+  const audio = decoded.getChannelData(0)
+
+  return audio
 }
 </script>
 <template>
@@ -32,7 +49,7 @@ function handleFileChange(file: Array<File>) {
     </div>
     <UploadFile @change="handleFileChange" file-type="mp3,wav" />
     <div class="button">
-      <button class="normal-button pulse-button">Generate Text</button>
+      <button @click="generateText" class="normal-button pulse-button">Generate Text</button>
     </div>
   </div>
 </template>
