@@ -6,7 +6,7 @@ const props = defineProps({
 
 // type-based (TS)
 const emit = defineEmits<{
-  (e: 'change', file: File | Array<File>): void
+  (e: 'change', file: Array<File>): void
 }>()
 
 /**
@@ -14,13 +14,8 @@ const emit = defineEmits<{
  * @param e uploadEvent
  */
 function handleFile(e: any) {
-  if (!props.multiple) {
-    const file = e.target.files[0] as File
-    emit('change', file)
-  } else {
     const files = [...e.target.files] as Array<File>
     emit('change', files)
-  }
 }
 </script>
 <template>

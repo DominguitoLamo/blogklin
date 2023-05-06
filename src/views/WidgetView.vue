@@ -1,21 +1,24 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import tablePic from '@/assets/table.svg'
+import textPic from '@/assets/text.svg'
+import searchPic from '@/assets/search.svg'
 
 const router = useRouter()
 const tools = [
   {
     name: 'ExcelConverter',
-    icon: 'table.svg',
+    icon: tablePic,
     introd: `Convert excel to json or markdown`,
   },
   {
     name: 'TranslateClassification',
-    icon: 'text.svg',
+    icon: textPic,
     introd: `Seperate Chinese and English text`
   },
   {
     name: 'ImageOCR',
-    icon: 'search.svg',
+    icon: searchPic,
     introd: 'Convert image to text'
   }
 ]
@@ -37,7 +40,7 @@ function gotoTool(name: string) {
       <span class="animation"></span>
       <span class="animation"></span>
       <header>
-        <img :src="'/src/assets/' + item.icon" />
+        <img :src="item.icon" />
         <span class="tool-title">{{ item.name }}</span>
       </header>
       <span class="introd">{{ item.introd }}</span>
