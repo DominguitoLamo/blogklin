@@ -30,16 +30,6 @@ const routesRef = ref(appRoutes.map(item => {
 }))
 
 
-const routerShow = ref(true)
-
-router.beforeEach((to, from, next) => {
-  routerShow.value = false
-  setTimeout(() => {
-    routerShow.value = true
-    next()
-  }, 300)
-})
-
 function handlePageNav(activeIndex: number) {
   routesRef.value.forEach((item, curindex) => item.active = activeIndex === curindex)
   router.push(routesRef.value[activeIndex].path)
@@ -59,11 +49,13 @@ function handlePageNav(activeIndex: number) {
       >{{ item.name }}</a>
     </nav>
   </header>
-  <router-view v-slot="{ Component }">
-    <transition name="fade">
-      <component :is="Component" />
-    </transition>
-  </router-view>
+  <div class="router">
+    <router-view v-slot="{ Component }">
+      <transition name="slide-left">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </div>
   <footer>
     <span class="footer-text">Made with 🤍 by Chon Lam</span>
   </footer>
@@ -126,14 +118,24 @@ function handlePageNav(activeIndex: number) {
     letter-spacing: normal;
   }
 
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 500ms ease, transform 500ms ease;
+  .router {
+    padding-top: 50px;
   }
 
-  .fade-enter-from,
-  .fade-leave-to {
+  .slide-left-enter-from {
     opacity: 0;
-    transform: translateY(-50px);
+    -webkit-transform: translate(30px, 0);
+    transform: translate(30px, 0);
+  }
+  .slide-left-enter-active{
+    transition: all .5s ease;
+  }
+  .slide-left-leave-to{
+    opacity: 0;
+    -webkit-transform: translate(-30px, 0);
+    transform: translate(-30px, 0);
+  }
+  .slide-left-leave-active {
+    transition: all .5s ease;
   }
 </style>
