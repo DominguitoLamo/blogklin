@@ -4,6 +4,10 @@ import BlogView from '../views/BlogView.vue'
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
+    redirect: { name: 'Blog' }
+  },
+  {
+    path: '/blog',
     name: 'Blog',
     component: BlogView
   },

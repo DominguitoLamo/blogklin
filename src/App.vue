@@ -28,6 +28,8 @@ const routesRef = ref(appRoutes.map(item => {
     active: item.name.toLowerCase() === getLocationHashName()
   }
 }))
+
+
 const routerShow = ref(true)
 
 router.beforeEach((to, from, next) => {
