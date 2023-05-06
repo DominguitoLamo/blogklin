@@ -7,17 +7,6 @@ import { ref } from 'vue'
 /* eslint-disable */
 import { createWorker, PSM, OEM } from 'tesseract.js'
 
-const functionTypes: Array<Option> = [
-  {
-    name: 'Upload Images',
-    value: 'upload'
-  }, {
-    name: 'Crop Image Uploaded',
-    value: 'crop'
-  }
-]
-const typeValue = ref('upload')
-
 const langs: Array<Option> = [
   {
     name: 'English',
@@ -83,10 +72,9 @@ function handleMultipleUploadChange(files: Array<File>) {
 <template>
   <div class="ocr">
     <header>
-      <OptionsList v-model="typeValue" :options="functionTypes" />
       <OptionsList v-model="langValue" :options="langs" />
     </header>
-    <div v-if="typeValue === 'upload'">
+    <div>
       <UploadFile :multiple="true" @change="handleMultipleUploadChange" file-type="png,jpg,jpeg" />
       <div class="button">
         <button @click="recognize" class="normal-button">Generate Text</button>
