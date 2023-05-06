@@ -18,7 +18,7 @@ function updateValue(value: string | number) {
 }
 </script>
 <template>
-  <div class="options">
+  <div class="select">
     <select>
       <option
         @click="updateValue(item.value)"
@@ -29,4 +29,21 @@ function updateValue(value: string | number) {
   </div>
 </template>
 <style scoped>
+.select {
+  position: relative;
+  display: inline-block;
+  min-width: 200px;
+}
+
+.select select {
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+  padding: 10px 15px;
+  outline: 0;
+  border: 0;
+  border-radius: 10px;
+  background-color: rgb(40, 60, 73);
+  color: rgb(207, 213, 221);
+}
 </style>
