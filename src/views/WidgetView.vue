@@ -1,9 +1,19 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import tablePic from '@/assets/table.svg'
 import textPic from '@/assets/text.svg'
 import searchPic from '@/assets/search.svg'
 import audioPic from '@/assets/audio.svg'
+
+const tabs_background = [
+  '#5cc6c7',
+  '#50aeeb',
+  '#e1718b',
+  '#c76358',
+  '#edad68',
+  '#e27fd5'
+]
 
 const router = useRouter()
 const tools = [
@@ -29,6 +39,14 @@ const tools = [
   }
 ]
 
+const toolBoxHoverBackground = ref(
+  tools.map((item, index) => {
+    return {
+      '--hover_bg': tabs_background[index % tabs_background.length]
+    }
+  })
+)
+
 function gotoTool(name: string) {
   router.push({
     name: 'WidgetContentView',
@@ -40,11 +58,18 @@ function gotoTool(name: string) {
 </script>
 <template>
   <div class="tool">
-    <div @click="gotoTool(item.name)" class="tool-item" v-for="item in tools" :key="item.name">
-      <span class="animation"></span>
-      <span class="animation"></span>
-      <span class="animation"></span>
-      <span class="animation"></span>
+    <div
+      @click="gotoTool(item.name)"
+      :style="toolBoxHoverBackground[index]"
+      class="tool-item" v-for="(item, index) in tools"
+      :key="item.name"
+    >
+      <span
+        v-for="lintIndex in 4"
+        :key="lintIndex"
+        class="animation"
+        :style="{'background': `linear-gradient(${lintIndex * 90}deg, transparent, ${tabs_background[index % tabs_background.length]})`}"
+        ></span>
       <header>
         <img :src="item.icon" />
         <span class="tool-title">{{ item.name }}</span>
@@ -74,13 +99,13 @@ function gotoTool(name: string) {
   }
 
   .tool-item:hover {
-    background: rgb(225, 113, 139);
+    background: var(--hover_bg);
     color: #fff;
     border-radius: 5px;
-    box-shadow: 0 0 5px rgb(225, 113, 139),
-                0 0 25px rgb(225, 113, 139),
-                0 0 50px rgb(225, 113, 139),
-                0 0 100px rgb(225, 113, 139);
+    box-shadow: 0 0 5px var(--hover_bg),
+                0 0 25px var(--hover_bg),
+                0 0 50px var(--hover_bg),
+                0 0 100px var(--hover_bg);
   }
 
   .tool-item header {
@@ -116,7 +141,6 @@ function gotoTool(name: string) {
   left: -100%;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgb(225, 113, 139));
   animation: btn-anim1 1s linear infinite;
   }
 
@@ -134,7 +158,6 @@ function gotoTool(name: string) {
     right: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(180deg, transparent, rgb(225, 113, 139));
     animation: btn-anim2 1s linear infinite;
     animation-delay: .25s
   }
@@ -153,7 +176,6 @@ function gotoTool(name: string) {
     right: -100%;
     width: 100%;
     height: 2px;
-    background: linear-gradient(270deg, transparent, rgb(225, 113, 139));
     animation: btn-anim3 1s linear infinite;
     animation-delay: .5s
   }
@@ -172,7 +194,6 @@ function gotoTool(name: string) {
     left: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(360deg, transparent, rgb(225, 113, 139));
     animation: btn-anim4 1s linear infinite;
     animation-delay: .75s
   }
@@ -185,5 +206,4 @@ function gotoTool(name: string) {
       bottom: 100%;
     }
   }
-
 </style>
