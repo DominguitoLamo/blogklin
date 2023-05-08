@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { text2clip } from '@/utils'
 import UploadFile from './UploadFile.vue'
 import { read as xlsxRead, utils as xlsxUtils } from 'xlsx'
 // @ts-ignore
@@ -82,6 +83,9 @@ function getExcelData(callback: (data: Array<ExcelData>) => void) {
   }
 }
 
+function copyText() {
+  text2clip(resultText.value)
+}
 </script>
 <template>
   <div class="converter">
@@ -92,8 +96,9 @@ function getExcelData(callback: (data: Array<ExcelData>) => void) {
       <div class="buttons">
         <button @click="gen2Json" class="normal-button json-btn">To Json</button>
         <button @click="gen2Md" class="normal-button md-btn">To Md</button>
+        <button v-if="resultText !== ''" @click="copyText" class="normal-button">Copy to Clipboard</button>
       </div>
-      <div class="preview">
+      <div v-if="resultText !== ''" class="preview">
         <textarea v-model="resultText"></textarea>
       </div>
     </div>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 /* __vue_virtual_code_placeholder__ */
 import type { Option } from '@/interface'
+import { text2clip } from '@/utils'
 import OptionsList from './OptionsList.vue'
 import UploadFile from './UploadFile.vue'
 import { ref } from 'vue'
@@ -68,6 +69,10 @@ async function recognize() {
 function handleMultipleUploadChange(files: Array<File>) {
   uploadFiles.value = [...files]
 }
+
+function copyText() {
+  text2clip(resultText.value)
+}
 </script>
 <template>
   <div class="ocr">
@@ -77,7 +82,8 @@ function handleMultipleUploadChange(files: Array<File>) {
     <div>
       <UploadFile :multiple="true" @change="handleMultipleUploadChange" file-type="png,jpg,jpeg" />
       <div class="button">
-        <button @click="recognize" class="normal-button">Generate Text</button>
+        <button @click="recognize" class="normal-button text-button">Generate Text</button>
+        <button v-if="resultText !== ''" @click="copyText" class="normal-button copy-button">Copy to Clipboard</button>
       </div>
       <div v-if="loading" class="loading">Image Processing...</div>
       <div v-if="resultText !== ''" class="result">
@@ -97,6 +103,8 @@ function handleMultipleUploadChange(files: Array<File>) {
   }
 
   .button {
+    display: flex;
+    gap: 10px;
     margin-top: 20px;
     margin-bottom: 20px;
   }
@@ -108,5 +116,28 @@ function handleMultipleUploadChange(files: Array<File>) {
   .result textarea {
     width: 1000px;
     height: 500px;
+  }
+
+  .normal-button.text-button {
+    background: rgb(6,14,131);
+    background: linear-gradient(0deg, rgba(6,14,131,1) 0%, rgba(12,25,180,1) 100%);
+    border: none;
+  }
+
+  .normal-button.text-button:hover {
+    background: rgb(0,3,255);
+    background: linear-gradient(0deg, rgba(0,3,255,1) 0%, rgba(2,126,251,1) 100%);
+  }
+
+  .normal-button.copy-button {
+    background: rgba(251,33,117,1);
+    background: linear-gradient(0deg, rgba(251,33,117,1) 0%, rgba(234,76,137,1) 100%);
+    border: none;
+  }
+
+  .normal-button.copy-button:hover {
+    background: rgb(238, 94, 149);
+    background: linear-gradient(0deg, rgb(238, 94, 149) 0%, rgba(234,76,137,1) 100%);
+    border: none;
   }
 </style>
