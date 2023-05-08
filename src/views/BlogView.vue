@@ -115,13 +115,8 @@ function searchByTag(text: string) {
   searchBlog()
 }
 
-function gotoBlogContent(title: string) {
-  router.push({
-    name: 'BlogContent',
-    query: {
-      title
-    }
-  })
+function gotoBlogContent(path: string) {
+  window.open(path, '_blank')
 }
 
 const searchBlogDebounced = debounce(searchBlog, 500)
@@ -149,7 +144,7 @@ const searchBlogDebounced = debounce(searchBlog, 500)
         :key="index"
         class="blog-box"
         :style="blogPops[index] ? blogPopStyle : ''"
-        @click="gotoBlogContent(item.title)"
+        @click="gotoBlogContent(item.path)"
       >
         <div class="img-box">
           <img :src="item.picUrl" />
