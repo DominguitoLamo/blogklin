@@ -65,16 +65,15 @@ async function speech_to_text(req) {
 
       ...DEFAULT_GREEDY_PARAMS,
       callback_function: function (beams) {
-        console.log('beam:', beams)
         const decodedText = pipeline.tokenizer.decode(beams[0].output_token_ids, {
             skip_special_tokens: true,
         })
-        console.log('text:', decodedText)
+        console.log(decodedText)
       }
   })
-  console.log('pipeline result:', result)
   self.postMessage({
     type: 'finish',
     data: result.text.trim()
   });
+  self.close()
 }

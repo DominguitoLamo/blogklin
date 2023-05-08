@@ -10,7 +10,8 @@ interface WorkerRes {
   data: any
 }
 
-const worker = new Worker(new URL('../worker/whisper.js', import.meta.url))
+// new Worker(new URL('../worker/whisper.js', import.meta.url))
+let worker : Worker | null
 
 const models: Array<Option> = [
   {
@@ -27,12 +28,20 @@ const modelValue = ref('whisper-tiny.en')
 const uploadedFile = ref()
 const resultText = ref('')
 
-worker.addEventListener('message', (event) => {
-  const res = event.data as WorkerRes
-  if (res.type === 'finish') {
-    resultText.value = res.data
-  }
-})
+function useWhisperWorker() {
+  worker = new Worker(new URL('../worker/whisper.js', import.meta.url))
+
+  worker.addEventListener('message', (event) => {
+    const res = event.data as WorkerRes
+    if (res.type === 'finish') {
+      resultText.value = res.data
+      uploadedFile.value = null
+    }
+    worker?.terminate()
+  })
+
+  return worker
+}
 
 function handleFileChange(file: Array<File>) {
   uploadedFile.value = file[0]
@@ -40,6 +49,7 @@ function handleFileChange(file: Array<File>) {
 
 async function generateText() {
   resultText.value = ''
+  worker = useWhisperWorker()
   const audio = await generateAudioContext()
   worker.postMessage({
     audio,
