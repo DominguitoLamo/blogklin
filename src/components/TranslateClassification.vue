@@ -56,7 +56,6 @@ function classification() {
 
 function copy2Clipboard(text: string) {
   text2clip(text)
-  showToast('Success to copy to the clipboard')
 }
 </script>
 <template>

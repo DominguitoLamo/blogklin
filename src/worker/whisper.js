@@ -48,28 +48,26 @@ class AutomaticSpeechRecognitionPipelineFactory extends PipelineFactory {
 
 
 self.addEventListener('message', async(event) => {
-  console.log('sent')
   speech_to_text(event.data)
 })
 
 async function speech_to_text(req) {
-  let pipeline = await AutomaticSpeechRecognitionPipelineFactory.getInstance(`openai/${req.model}`, (msg) => {
-    console.log(msg)
+  self.postMessage({
+    type: 'load',
+    data: ''
   })
+  let pipeline = await AutomaticSpeechRecognitionPipelineFactory.getInstance(`openai/${req.model}`)
 
-  console.log('instance initalized')
+  self.postMessage({
+    type: 'generate',
+    data: ''
+  })
   const result = await pipeline(req.audio, {
       // Choose good defaults for the demo
       chunk_length_s: 30,
       stride_length_s: 5,
 
       ...DEFAULT_GREEDY_PARAMS,
-      callback_function: function (beams) {
-        const decodedText = pipeline.tokenizer.decode(beams[0].output_token_ids, {
-            skip_special_tokens: true,
-        })
-        console.log(decodedText)
-      }
   })
   self.postMessage({
     type: 'finish',

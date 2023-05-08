@@ -18,7 +18,8 @@ export function getLocationHashName() {
 }
 
 export function text2clip(text: string) {
-  return navigator.clipboard.writeText(text)
+  navigator.clipboard.writeText(text)
+  showToast('Success to copy to the clipboard')
 }
 
 export function showToast(inputMsg: string, durationTime: number = 1500) {
