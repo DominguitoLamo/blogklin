@@ -2,7 +2,7 @@
 import blogIndex from '@/blogs/index.json'
 import { onMounted, ref, type Ref } from 'vue'
 import { debounce } from '@/utils'
-import router from '@/router'
+import datePic from '@/assets/date.svg'
 
 const BLOGS_PER_PAGE = 9
 
