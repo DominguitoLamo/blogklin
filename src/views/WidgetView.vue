@@ -81,9 +81,11 @@ function gotoTool(name: string) {
 <style scoped>
   .tool {
     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 50px;
-    min-height: 83vh;
-    padding: 20px
+    min-height: 77vh;
+    padding: 20px 0;
   }
 
   .tool-item {
