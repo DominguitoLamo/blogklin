@@ -5,6 +5,11 @@ import UploadFile from './UploadFile.vue'
 import OptionsList from './OptionsList.vue'
 import type { Option } from '@/interface'
 
+interface WorkerRes {
+  type: string,
+  data: any
+}
+
 const worker = new Worker(new URL('../worker/whisper.js', import.meta.url))
 
 const models: Array<Option> = [
@@ -22,13 +27,24 @@ const modelValue = ref('whisper-tiny.en')
 const uploadedFile = ref()
 const resultText = ref('')
 
+worker.addEventListener('message', (event) => {
+  const res = event.data as WorkerRes
+  if (res.type === 'finish') {
+    resultText.value = res.data
+  }
+})
+
 function handleFileChange(file: Array<File>) {
   uploadedFile.value = file[0]
 }
 
 async function generateText() {
+  resultText.value = ''
   const audio = await generateAudioContext()
-  worker.postMessage(audio)
+  worker.postMessage({
+    audio,
+    model: modelValue.value
+  })
 }
 
 async function generateAudioContext() {
@@ -54,6 +70,7 @@ async function generateAudioContext() {
     <div class="button">
       <button @click="generateText" class="normal-button pulse-button">Generate Text</button>
     </div>
+    <div>{{ resultText }}</div>
   </div>
 </template>
 <style scoped>
