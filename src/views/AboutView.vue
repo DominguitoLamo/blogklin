@@ -10,8 +10,13 @@ import { createSketch } from '@/3dRender/raining';
   ])
 
   onMounted(() => {
-    createSketch()
+    const sketch = createSketch()
+    resizeSketch(sketch.container)
   })
+
+  function resizeSketch(container: HTMLElement) {
+
+  }
 
 </script>
 <template>
