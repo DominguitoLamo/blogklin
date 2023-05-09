@@ -14,11 +14,16 @@
   },
   "dependencies": {
     "@types/fabric": "^5.3.2",
+    "@types/three": "^0.152.0",
     "@xenova/transformers": "^1.4.3",
     "fabric": "^5.3.0",
+    "gsap": "^3.11.5",
     "json2md": "^2.0.0",
+    "kokomi.js": "^1.9.74",
     "pinia": "^2.0.35",
+    "postprocessing": "^6.31.0",
     "tesseract.js": "^4.0.5",
+    "three": "^0.152.2",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6",
     "xlsx": "^0.18.5"
