@@ -15,7 +15,16 @@ import { createSketch } from '@/3dRender/raining';
   })
 
   function resizeSketch(container: HTMLElement) {
-
+    const width = container.clientWidth
+    const height = container.clientHeight
+    const canvas = container.children.item(0) as HTMLElement
+    // @ts-ignore
+    canvas.width = width
+    // @ts-ignore
+    canvas.height = height
+    
+    canvas.style.width = `${width}px`
+    canvas.style.height = `${height}px`
   }
 
 </script>
@@ -34,14 +43,16 @@ import { createSketch } from '@/3dRender/raining';
 
 .about {
   min-height: 87vh;
+  overflow-x: hidden;
 }
 
 .introduction {
+  box-sizing: border-box;
   position: relative;
   display: flex;
   align-items: center;
   width: 100vw;
-  height: 50vh;
+  height: 70vh;
   gap: 100px;
   padding: 90px 32px;
 }

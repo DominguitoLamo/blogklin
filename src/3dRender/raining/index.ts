@@ -30,6 +30,7 @@ class RainFloor extends kokomi.Component {
     this.mirror = mirror;
     mirror.position.z = -25;
     mirror.rotation.x = -Math.PI / 2;
+    mirror.position.y = -1;
 
     mirror.material.uniforms = {
       ...mirror.material.uniforms,
@@ -87,186 +88,6 @@ class RainFloor extends kokomi.Component {
       this.mipmapFBO.rt,
       this.base.renderer
     );
-  }
-}
-
-class Sketch extends kokomi.Base {
-  am: kokomi.AssetManager;
-
-  constructor() {
-    super()
-    this.am = new kokomi.AssetManager(this, [
-      {
-        name: "asphalt-normal",
-        type: "texture",
-        path: "https://s2.loli.net/2023/02/09/4FkJryn78ZhQBqj.jpg",
-      },
-      {
-        name: "floor-normal",
-        type: "texture",
-        path: "https://s2.loli.net/2023/02/15/GcWBptwDKn8b2dU.jpg",
-      },
-      {
-        name: "floor-opacity",
-        type: "texture",
-        path: "https://s2.loli.net/2023/02/15/E5dajTYIucWL1vy.jpg",
-      },
-      {
-        name: "floor-roughness",
-        type: "texture",
-        path: "https://s2.loli.net/2023/02/15/aWeN6ED4mbpZGLs.jpg",
-      },
-      {
-        name: "rain-normal",
-        type: "texture",
-        path: "https://s2.loli.net/2023/01/31/qT2vC8G71UtMXeb.png",
-      },
-    ]);
-  }
-
-  create() {
-    this.camera.position.set(0, 2, 9);
-
-    const lookAt = new THREE.Vector3(0, 2, 0);
-    this.camera.lookAt(lookAt);
-
-    const controls = new kokomi.OrbitControls(this);
-    controls.controls.target = lookAt;
-
-    // config
-    const config = {
-      text: "B",
-      color: "#ef77eb",
-      rain: {
-        count: 1000,
-        speed: 1.5,
-        debug: false,
-      },
-    };
-
-    // asphalt: https://3dtextures.me/2017/04/05/asphalt-001/
-    // floor: https://3dtextures.me/2019/10/22/ground-wet-002/
-    // rain normal: https://www.shadertoy.com/view/XsfXDr
-    const am = this.am
-    am.on("ready", async () => {
-      const font = await kokomi.loadFont();
-
-      // lights
-      const pointLight1 = new THREE.PointLight(config.color, 0.5, 17, 0.8);
-      pointLight1.position.set(0, 2, 0);
-      this.scene.add(pointLight1);
-
-      const pointLight2 = new THREE.PointLight("#81C8F2", 2, 30);
-      pointLight2.position.set(0, 25, 0);
-      this.scene.add(pointLight2);
-
-      // wall
-      const aspTex = am.items["asphalt-normal"];
-      aspTex.rotation = THREE.MathUtils.degToRad(90);
-      aspTex.wrapS = aspTex.wrapT = THREE.RepeatWrapping;
-      aspTex.repeat.set(5, 8);
-
-      const wallMat = new THREE.MeshPhongMaterial({
-        color: new THREE.Color("#111111"),
-        normalMap: aspTex,
-        normalScale: new THREE.Vector2(0.5, 0.5),
-        shininess: 200,
-      });
-
-      const wall = new THREE.Mesh(new THREE.BoxGeometry(25, 20, 0.5), wallMat);
-      this.scene.add(wall);
-      wall.position.y = 10;
-      wall.position.z = -10.3;
-
-      const wall2 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 20, 20), wallMat);
-      this.scene.add(wall2);
-      wall2.position.y = 10;
-      wall2.position.x = -12;
-
-      const wall3 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 20, 20), wallMat);
-      this.scene.add(wall3);
-      wall3.position.y = 10;
-      wall3.position.x = 12;
-
-      // text
-      const t3d = new kokomi.Text3D(this, config.text, font, {
-        font,
-        size: 3,
-        height: 0.2,
-        curveSegments: 120,
-        bevelEnabled: false,
-      });
-      t3d.mesh.geometry.center();
-
-      const tm = new THREE.Mesh(
-        t3d.mesh.geometry,
-        new THREE.MeshBasicMaterial({
-          color: config.color,
-        })
-      );
-      this.scene.add(tm);
-      tm.position.y = 1.54;
-      tm.position.x = 2;
-
-      // rain floor
-      const rainFloor = new RainFloor(this, {
-        count: config.rain.count,
-      }, this.am);
-      rainFloor.addExisting();
-
-      // rain
-      const rain = new Rain(this, config.rain, this.am);
-      rain.addExisting();
-
-      rainFloor.mirror.ignoreObjects.push(rain.rain);
-
-      // flicker
-      const turnOffLight = () => {
-        tm.material.color.copy(new THREE.Color("black"));
-        pointLight1.color.copy(new THREE.Color("black"));
-      };
-
-      const turnOnLight = () => {
-        tm.material.color.copy(new THREE.Color(config.color));
-        pointLight1.color.copy(new THREE.Color(config.color));
-      };
-
-      let flickerTimer = null;
-
-      const flicker = () => {
-        flickerTimer = setInterval(async () => {
-          const rate = Math.random();
-          if (rate < 0.5) {
-            turnOffLight();
-            await kokomi.sleep(200 * Math.random());
-            turnOnLight();
-            await kokomi.sleep(200 * Math.random());
-            turnOffLight();
-            await kokomi.sleep(200 * Math.random());
-            turnOnLight();
-          }
-        }, 3000);
-      };
-
-      flicker();
-
-      // postprocessing
-      const composer = new POSTPROCESSING.EffectComposer(this.renderer);
-      composer.addPass(new POSTPROCESSING.RenderPass(this.scene, this.camera));
-
-      // bloom
-      const bloom = new POSTPROCESSING.BloomEffect({
-        luminanceThreshold: 0.4,
-        luminanceSmoothing: 0,
-        mipmapBlur: true,
-        intensity: 2,
-      });
-      composer.addPass(new POSTPROCESSING.EffectPass(this.camera, bloom));
-
-      // antialiasing
-      const smaa = new POSTPROCESSING.SMAAEffect();
-      composer.addPass(new POSTPROCESSING.EffectPass(this.camera, smaa));
-    });
   }
 }
 
@@ -382,6 +203,171 @@ class Rain extends kokomi.Component {
     this.rain.visible = true;
   }
 }
+
+class Sketch extends kokomi.Base {
+  am: kokomi.AssetManager;
+
+  constructor() {
+    super()
+    this.am = new kokomi.AssetManager(this, [
+      {
+        name: "asphalt-normal",
+        type: "texture",
+        path: "https://s2.loli.net/2023/02/09/4FkJryn78ZhQBqj.jpg",
+      },
+      {
+        name: "floor-normal",
+        type: "texture",
+        path: "https://s2.loli.net/2023/02/15/GcWBptwDKn8b2dU.jpg",
+      },
+      {
+        name: "floor-opacity",
+        type: "texture",
+        path: "https://s2.loli.net/2023/02/15/E5dajTYIucWL1vy.jpg",
+      },
+      {
+        name: "floor-roughness",
+        type: "texture",
+        path: "https://s2.loli.net/2023/02/15/aWeN6ED4mbpZGLs.jpg",
+      },
+      {
+        name: "rain-normal",
+        type: "texture",
+        path: "https://s2.loli.net/2023/01/31/qT2vC8G71UtMXeb.png",
+      },
+    ]);
+  }
+
+  create() {
+    this.camera.position.set(0, 6, 10.5);
+
+    const lookAt = new THREE.Vector3(0, 2, 0);
+    this.camera.lookAt(lookAt);
+
+    const controls = new kokomi.OrbitControls(this);
+    controls.controls.target = lookAt;
+
+    // config
+    const config = {
+      text: "B",
+      color: "#ffffff",
+      rain: {
+        count: 1000,
+        speed: 1.5,
+        debug: false,
+      },
+    };
+
+    // asphalt: https://3dtextures.me/2017/04/05/asphalt-001/
+    // floor: https://3dtextures.me/2019/10/22/ground-wet-002/
+    // rain normal: https://www.shadertoy.com/view/XsfXDr
+    const am = this.am
+    am.on("ready", async () => {
+      const font = await kokomi.loadFont();
+
+      // lights
+      const pointLight1 = new THREE.PointLight(config.color, 5, 17, 0.8);
+      pointLight1.position.set(3, 3, 8);
+      this.scene.add(pointLight1);
+
+      const pointLight2 = new THREE.PointLight("#81C8F2", 2, 30);
+      pointLight2.position.set(0, 28, 3);
+      this.scene.add(pointLight2);
+
+      // wall
+      const aspTex = am.items["asphalt-normal"];
+      aspTex.rotation = THREE.MathUtils.degToRad(90);
+      aspTex.wrapS = aspTex.wrapT = THREE.RepeatWrapping;
+      aspTex.repeat.set(5, 8);
+
+      const wallMat = new THREE.MeshPhongMaterial({
+        color: new THREE.Color("#111111"),
+        normalMap: aspTex,
+        normalScale: new THREE.Vector2(0.5, 0.5),
+        shininess: 200,
+      });
+
+      const wall = new THREE.Mesh(new THREE.BoxGeometry(25, 20, 0.5), wallMat);
+      this.scene.add(wall);
+      wall.position.y = 10;
+      wall.position.z = -10.3;
+
+      const wall2 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 20, 20), wallMat);
+      this.scene.add(wall2);
+      wall2.position.y = 10;
+      wall2.position.x = -12;
+
+      const wall3 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 20, 20), wallMat);
+      this.scene.add(wall3);
+      wall3.position.y = 10;
+      wall3.position.x = 12;
+
+      // text
+      const t3d = new kokomi.Text3D(this, config.text, font, {
+        font,
+        size: 2,
+        height: 0.3,
+        curveSegments: 120,
+        bevelEnabled: false,
+      });
+      t3d.mesh.geometry.center();
+
+      const tm = new THREE.Mesh(
+        t3d.mesh.geometry,
+        new THREE.MeshBasicMaterial({
+          color: config.color
+        })
+      );
+      this.scene.add(tm);
+      tm.position.x = 3;
+      tm.position.y = 0;
+      tm.position.z = 3;
+
+      // rain floor
+      const rainFloor = new RainFloor(this, {
+        count: config.rain.count,
+      }, am);
+      rainFloor.addExisting();
+
+      // rain
+      const rain = new Rain(this, config.rain, am);
+      rain.addExisting();
+
+      rainFloor.mirror.ignoreObjects.push(rain.rain);
+
+      // flicker
+      const turnOffLight = () => {
+        tm.material.color.copy(new THREE.Color("black"));
+        pointLight1.color.copy(new THREE.Color("black"));
+      };
+
+      const turnOnLight = () => {
+        tm.material.color.copy(new THREE.Color(config.color));
+        pointLight1.color.copy(new THREE.Color(config.color));
+      };
+
+      let flickerTimer = null;
+
+      const flicker = () => {
+        flickerTimer = setInterval(async () => {
+          const rate = Math.random();
+          if (rate < 0.5) {
+            turnOffLight();
+            await kokomi.sleep(200 * Math.random());
+            turnOnLight();
+            await kokomi.sleep(200 * Math.random());
+            turnOffLight();
+            await kokomi.sleep(200 * Math.random());
+            turnOnLight();
+          }
+        }, 3000);
+      };
+
+      flicker();
+    });
+  }
+}
+
 
 export const createSketch = () => {
   const sketch = new Sketch();
