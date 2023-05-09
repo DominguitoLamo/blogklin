@@ -1,11 +1,26 @@
 <script setup lang="ts">
-  const introduction = `BLOGKLIN is Chon W. Lam's space for sharing and demonstrating frontend techniques. Creating a personal blog is a way to unleash the power of the web that is restricted by dot-com companies.`
+import { onMounted, ref } from 'vue'
+import { createSketch } from '@/3dRender/raining';
+
+  const introdPoem = ref([
+    'BLOGKLIN is a place for sharing',
+    'Where knowledge is always daring',
+    'To break free from tradition chains',
+    'And spark creativity in our brains'
+  ])
+
+  onMounted(() => {
+    createSketch()
+  })
+
 </script>
 <template>
   <div class="about">
     <div class="introduction">
-      <span class="title">{{ introduction }}</span>
-      <span class="logo">B</span>
+      <div id="sketch"></div>
+      <div class="poem">
+        <span v-for="item in introdPoem" :key="item" class="title">{{ item }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -17,15 +32,19 @@
 }
 
 .introduction {
+  position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  width: 100vw;
+  height: 50vh;
   gap: 100px;
   padding: 90px 32px;
 }
 
-.introduction .title {
-  width: 500px;
+.introduction .poem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   font-size: 40px;
   line-height: 48px;
   font-weight: bold;
@@ -35,6 +54,11 @@
   animation-duration: 1s;
   animation-delay: 1s;
   animation-fill-mode: forwards;
+}
+
+.introduction .poem span {
+  display: inline-block;
+  width: auto;
 }
 
 .introduction .logo {
@@ -96,6 +120,15 @@
       0px -10px 100px #7B96B8,
       0px -10px 100px #7B96B8;
   }
+}
+
+#sketch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 @keyframes fade {

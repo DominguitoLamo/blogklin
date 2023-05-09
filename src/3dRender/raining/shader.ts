@@ -256,7 +256,7 @@ void main(){
 }
 `;
 
-const fragmentShader2 = `
+export const fragmentShader2 = `
 uniform float iTime;
 uniform vec2 iResolution;
 uniform vec2 iMouse;
