@@ -1,7 +1,7 @@
 import * as kokomi from "kokomi.js"
 import * as THREE from 'three'
 import { vertexShader, fragmentShader, vertexShader2, fragmentShader2 } from './shader'
-import * as POSTPROCESSING from 'postprocessing'
+import { getRainRequestPath } from "@/request";
 
 class RainFloor extends kokomi.Component {
   uj: kokomi.UniformInjector;
@@ -213,27 +213,27 @@ class Sketch extends kokomi.Base {
       {
         name: "asphalt-normal",
         type: "texture",
-        path: "https://s2.loli.net/2023/02/09/4FkJryn78ZhQBqj.jpg",
+        path: getRainRequestPath("2023/02/09/4FkJryn78ZhQBqj.jpg"),
       },
       {
         name: "floor-normal",
         type: "texture",
-        path: "https://s2.loli.net/2023/02/15/GcWBptwDKn8b2dU.jpg",
+        path: getRainRequestPath("2023/02/15/GcWBptwDKn8b2dU.jpg"),
       },
       {
         name: "floor-opacity",
         type: "texture",
-        path: "https://s2.loli.net/2023/02/15/E5dajTYIucWL1vy.jpg",
+        path: getRainRequestPath("2023/02/15/E5dajTYIucWL1vy.jpg"),
       },
       {
         name: "floor-roughness",
         type: "texture",
-        path: "https://s2.loli.net/2023/02/15/aWeN6ED4mbpZGLs.jpg",
+        path: getRainRequestPath("2023/02/15/aWeN6ED4mbpZGLs.jpg"),
       },
       {
         name: "rain-normal",
         type: "texture",
-        path: "https://s2.loli.net/2023/01/31/qT2vC8G71UtMXeb.png",
+        path: getRainRequestPath("2023/01/31/qT2vC8G71UtMXeb.png"),
       },
     ]);
   }

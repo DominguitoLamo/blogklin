@@ -6,6 +6,16 @@ import Components from 'unplugin-vue-components/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      '/rainMaterial': {
+        target: 'https://s2.loli.net',
+        secure: false,
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/rainMaterial/, '')
+      }
+    }
+  },
   plugins: [
     vue({ include: [/\.vue$/] }),
     Components({
@@ -21,5 +31,5 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
 })

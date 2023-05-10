@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/rainMaterial/:path*",
+      "destination": "https://s2.loli.net/:path*"
+    }
+  ]
+}
