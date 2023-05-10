@@ -80,9 +80,9 @@ function gotoTool(name: string) {
 </template>
 <style scoped>
   .tool {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
     gap: 50px;
     min-height: 77vh;
     padding: 20px 0;
@@ -92,7 +92,6 @@ function gotoTool(name: string) {
     position: relative;
     display: flex;
     flex-direction: column;
-    min-width: 300px;
     max-height: 150px;
     padding: 10px 20px;
     transition: box-shadow .75s ease;
