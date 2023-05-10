@@ -58,40 +58,49 @@ function gotoTool(name: string) {
 </script>
 <template>
   <div class="tool">
-    <div
-      @click="gotoTool(item.name)"
-      :style="toolBoxHoverBackground[index]"
-      class="tool-item" v-for="(item, index) in tools"
-      :key="item.name"
-    >
-      <span
-        v-for="lintIndex in 4"
-        :key="lintIndex"
-        class="animation"
-        :style="{'background': `linear-gradient(${lintIndex * 90}deg, transparent, ${tabs_background[index % tabs_background.length]})`}"
-        ></span>
-      <header>
-        <img :src="item.icon" />
-        <span class="tool-title">{{ item.name }}</span>
-      </header>
-      <span class="introd">{{ item.introd }}</span>
+    <div class="tool-box">
+        <div
+        @click="gotoTool(item.name)"
+        :style="toolBoxHoverBackground[index]"
+        class="tool-item" v-for="(item, index) in tools"
+        :key="item.name"
+        >
+          <span
+            v-for="lintIndex in 4"
+            :key="lintIndex"
+            class="animation"
+            :style="{'background': `linear-gradient(${lintIndex * 90}deg, transparent, ${tabs_background[index % tabs_background.length]})`}"
+            ></span>
+        <header>
+          <img :src="item.icon" />
+          <span class="tool-title">{{ item.name }}</span>
+        </header>
+        <span class="introd">{{ item.introd }}</span>
+      </div>
     </div>
   </div>
 </template>
 <style scoped>
   .tool {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    justify-items: center;
+    display: flex;
+    justify-content: center;
     gap: 50px;
     min-height: 77vh;
     padding: 20px 0;
+  }
+
+  .tool-box {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 80vw;
   }
 
   .tool-item {
     position: relative;
     display: flex;
     flex-direction: column;
+    min-width: 300px;
     max-height: 150px;
     padding: 10px 20px;
     transition: box-shadow .75s ease;
