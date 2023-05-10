@@ -9,19 +9,16 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
-function updateValue(value: string | number) {
-  if (typeof value === 'string') {
-    emit('update:modelValue', value)
-  } else {
-    emit('update:modelValue', Number(value))
-  }
+function updateValue(e: any) {
+  const selectValue = e.srcElement.value as string
+  emit('update:modelValue', selectValue)
 }
+
 </script>
 <template>
   <div class="select">
-    <select>
+    <select @change="updateValue">
       <option
-        @click="updateValue(item.value)"
         v-for="item in props.options"
         :key="item.value"
         :value="item.value">{{ item.name }}</option>
