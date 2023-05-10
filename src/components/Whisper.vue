@@ -89,6 +89,8 @@ function copyText() {
 </script>
 <template>
   <div class="whisper">
+    <div class="warning">* This task is quite complicated and requires some time to complete.</div>
+    <div class="warning">* It is recommended to use whisper-base to generate non-English text.</div>
     <div class="selects">
       <span>Model: </span>
       <OptionsList v-model="modelValue" :options="models" />
@@ -153,6 +155,11 @@ function copyText() {
 
 .text textarea {
   height: 500px;
+}
+
+.warning {
+  margin-bottom: 10px;
+  color: rgba(251,33,117,1);
 }
 
 @keyframes pulse {
