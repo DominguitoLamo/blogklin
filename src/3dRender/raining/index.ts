@@ -1,7 +1,6 @@
 import * as kokomi from "kokomi.js"
 import * as THREE from 'three'
 import { vertexShader, fragmentShader, vertexShader2, fragmentShader2 } from './shader'
-import { getRainRequestPath } from "@/request";
 
 import asphaltNormal from '@/assets/textures/asphalt-normal.jpg'
 import floorNormal from '@/assets/textures/floor-normal.jpg'
