@@ -42,7 +42,7 @@ import { createSketch } from '@/3dRender/raining';
 <style scoped>
 
 .about {
-  min-height: 87vh;
+  min-height: 76vh;
   overflow-x: hidden;
 }
 
@@ -145,6 +145,16 @@ import { createSketch } from '@/3dRender/raining';
   width: 100%;
   height: 100%;
   z-index: -1;
+}
+
+.drive-home {
+  width: 100vw;
+  height: 100vh;
+}
+
+#drive-container {
+  width: 100%;
+  height: 100%;
 }
 
 @keyframes fade {
