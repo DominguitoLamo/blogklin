@@ -3,6 +3,12 @@ import * as THREE from 'three'
 import { vertexShader, fragmentShader, vertexShader2, fragmentShader2 } from './shader'
 import { getRainRequestPath } from "@/request";
 
+import asphaltNormal from '@/assets/textures/asphalt-normal.jpg'
+import floorNormal from '@/assets/textures/floor-normal.jpg'
+import floorOpacity from '@/assets/textures/floor-opacity.jpg'
+import floorRoughness from '@/assets/textures/floor-roughness.jpg'
+import rain from '@/assets/textures/rain.jpg'
+
 class RainFloor extends kokomi.Component {
   uj: kokomi.UniformInjector;
   mirror: kokomi.Reflector;
@@ -213,27 +219,27 @@ class Sketch extends kokomi.Base {
       {
         name: "asphalt-normal",
         type: "texture",
-        path: getRainRequestPath("2023/02/09/4FkJryn78ZhQBqj.jpg"),
+        path: asphaltNormal,
       },
       {
         name: "floor-normal",
         type: "texture",
-        path: getRainRequestPath("2023/02/15/GcWBptwDKn8b2dU.jpg"),
+        path: floorNormal,
       },
       {
         name: "floor-opacity",
         type: "texture",
-        path: getRainRequestPath("2023/02/15/E5dajTYIucWL1vy.jpg"),
+        path: floorOpacity,
       },
       {
         name: "floor-roughness",
         type: "texture",
-        path: getRainRequestPath("2023/02/15/aWeN6ED4mbpZGLs.jpg"),
+        path: floorRoughness,
       },
       {
         name: "rain-normal",
         type: "texture",
-        path: getRainRequestPath("2023/01/31/qT2vC8G71UtMXeb.png"),
+        path: rain,
       },
     ]);
   }

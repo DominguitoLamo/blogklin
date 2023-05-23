@@ -9,7 +9,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/rainMaterial': {
-        target: 'https://s2.loli.net',
+        target: 'https://smms.app',
         secure: false,
         changeOrigin: true,
         rewrite: path => path.replace(/^\/rainMaterial/, '')
