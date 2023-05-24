@@ -13,6 +13,13 @@
       "tags": ["shader", "opengl"],
       "date": "2023/05/16",
       "path": "https://charm-land-d29.notion.site/Make-a-Smiley-Face-in-Shader-8dcd1e7adc4e48f29d9f07e143571a2d"
+    },
+    {
+        "title": "Smoothstep",
+        "picUrl": "https://s2.loli.net/2023/05/24/prxYuwMW2FcGdlt.jpg",
+        "tags": ["shader", "opengl"],
+        "date": "2023/05/24",
+        "path": "https://charm-land-d29.notion.site/Smoothstep-415e746b541247a9bc7a14292c5639e9"
     }
   ]
 }
